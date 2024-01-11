@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void xor(char *txt, size_t txt_len, char *key, size_t key_len, char *txt_xor){
+void xor(const char *txt, const char *key, const size_t key_len, char *txt_xor, const size_t len){
     int index = 0;
-    if(txt_len > 0 && key_len > 0){
-        for(index = 0; index < txt_len; index++)
+    if(txt != NULL && key != NULL && txt_xor != NULL && len >= strlen(txt)){
+        for(index = 0; index < len; index++)
             txt_xor[index] = txt[index] ^ key[index % key_len];
     }
 }
