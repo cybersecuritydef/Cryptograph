@@ -17,7 +17,7 @@ void encode(const char *plain, char *encoded, const size_t len){
 void decode(const char *encoded, char *plain, const size_t len){
     if(encoded != NULL && plain != NULL && len >= strlen(encoded)){
         while(*encoded != '\0'){
-            *plain++ = ((int)(strchr(TABLE, *(encoded)) - TABLE) << 4) | (int)(strchr(TABLE, *(encoded + 1)) - TABLE);
+            *plain++ = ((int)(strchr(TABLE, *encoded) - TABLE) << 4) | (int)(strchr(TABLE, *(encoded + 1)) - TABLE);
             *(encoded += 2);
         }
         *plain = '\0';
