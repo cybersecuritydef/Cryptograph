@@ -4,16 +4,13 @@
 
 static char TABLE[] = "0123456789ABCDEF";
 
-void encode(const char *plain, size_t plain_len, char *encoded, size_t encoded_len){
-    size_t pos = 0;
-    size_t index = 0;
-    if(plain_len > 0 && encoded_len > 0){
-        while(pos < plain_len){
-            encoded[index++] = TABLE[plain[pos] >> 4];
-            encoded[index++] = TABLE[plain[pos] & 15];
-            pos++;
+void encode(const char *plain, char *urlenc, const size_t len){
+    if(plain != NULL && urlenc != NULL && len >= strlen(plain)){
+        while(*plain != '\0'){
+            *urlenc++ = TABLE[*plain >> 4];
+            *urlenc++ = TABLE[*plain++ & 15];
         }
-        encoded[index] = '\0';
+        *urlenc = '\0';
     }
 }
 
