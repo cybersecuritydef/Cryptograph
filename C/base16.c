@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static char TABLE[] = "0123456789ABCDEF";
+static const char TABLE[] = "0123456789ABCDEF";
 
 void b16encode(const char *plain, char *encoded, const size_t len){
     if(plain != NULL && encoded != NULL && len >= strlen(plain)){
