@@ -4,7 +4,7 @@
 
 static char TABLE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
-void encode(const char *plain, size_t plain_len, char *encoded, size_t encoded_len){
+void b32encode(const char *plain, size_t plain_len, char *encoded, size_t encoded_len){
     size_t pos = 0;
     size_t index = 0;
     if(plain_len > 0 && encoded_len > 0){
@@ -46,7 +46,7 @@ void encode(const char *plain, size_t plain_len, char *encoded, size_t encoded_l
     }
 }
 
-void decode(const char *encoded, size_t encoded_len, char *plain, size_t plain_len){
+void b32decode(const char *encoded, size_t encoded_len, char *plain, size_t plain_len){
     size_t pos = 0;
     size_t index = 0;
     if(encoded_len > 0 && plain_len > 0){
