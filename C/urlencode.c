@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-const char TABLE[] = "0123456789abcdef";
+static const char TABLE[] = "0123456789abcdef";
 
 void urlencode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
     size_t index = 0;
