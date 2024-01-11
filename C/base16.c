@@ -14,14 +14,12 @@ void encode(const char *plain, char *encoded, const size_t len){
     }
 }
 
-void decode(const char *encoded, size_t encoded_len, char *plain, size_t plain_len){
-    size_t pos = 0;
-    size_t index = 0;
-    if(encoded_len > 0 && plain_len > 0){
-        while(pos < encoded_len){
-            plain[index++] = ((int)(strchr(TABLE, encoded[pos]) - TABLE) << 4) | (int)(strchr(TABLE, encoded[pos + 1]) - TABLE);
-            pos += 2;
+void decode(const char *encoded, char *plain, const size_t len){
+    if(encoded != NULL && plain != NULL && len >= strlen(encoded)){
+        while(*encoded != '\0'){
+            *plain++ = ((int)(strchr(TABLE, *(encoded)) - TABLE) << 4) | (int)(strchr(TABLE, *(encoded + 1)) - TABLE);
+            *(encoded += 2);
         }
-        plain[index] = '\0';
+        *plain = '\0';
     }
 }
