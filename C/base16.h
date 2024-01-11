@@ -2,8 +2,8 @@
 #define __BASE16_H__
 
 
-void encode(const char *plain, char *encoded, const size_t len);
+void b16encode(const char *plain, char *encoded, const size_t len);
 
-void decode(const char *encoded, char *plain, const size_t len);
+void db16ecode(const char *encoded, char *plain, const size_t len);
 
 #endif
