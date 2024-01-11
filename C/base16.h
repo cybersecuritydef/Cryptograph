@@ -4,6 +4,6 @@
 
 void encode(const char *plain, char *encoded, const size_t len);
 
-void decode(const char *encoded, size_t encoded_len, char *plain, size_t plain_len);
+void decode(const char *encoded, char *plain, const size_t len);
 
 #endif
