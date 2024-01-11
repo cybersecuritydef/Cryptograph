@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static char TABLE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+static const char TABLE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 void b64encode(const char *plain, size_t plain_len, char *encoded, size_t encoded_len){
     size_t index = 0;
