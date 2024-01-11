@@ -5,7 +5,7 @@
 static char TABLE[] = "0123456789ABCDEF";
 
 void encode(const char *plain, char *encoded, const size_t len){
-    if(plain != NULL && urlenc != NULL && len >= strlen(plain)){
+    if(plain != NULL && encoded != NULL && len >= strlen(plain)){
         while(*plain != '\0'){
             *encoded++ = TABLE[*plain >> 4];
             *encoded++ = TABLE[*plain++ & 15];
