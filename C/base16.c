@@ -4,22 +4,26 @@
 
 static const char TABLE[] = "0123456789ABCDEF";
 
-void b16encode(const char *plain, char *encoded, const size_t len){
-    if(plain != NULL && encoded != NULL && len >= strlen(plain)){
-        while(*plain != '\0'){
-            *encoded++ = TABLE[*plain >> 4];
-            *encoded++ = TABLE[*plain++ & 15];
+void b16encode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
+    size_t index = 0;
+    size_t pos = 0;
+    if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+        while(pos < inlen){
+            outbuf[index++] = TABLE[inbuf[pos] >> 4];
+            outbuf[index++] = TABLE[inbuf[pos++] & 15];
         }
-        *encoded = '\0';
+        outbuf[index] = '\0';
     }
 }
 
-void b16decode(const char *encoded, char *plain, const size_t len){
-    if(encoded != NULL && plain != NULL && len >= strlen(encoded)){
-        while(*encoded != '\0'){
-            *plain++ = ((int)(strchr(TABLE, *encoded) - TABLE) << 4) | (int)(strchr(TABLE, *(encoded + 1)) - TABLE);
-            *(encoded += 2);
+void b16decode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
+    size_t index = 0;
+    size_t pos = 0;
+    if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+        while(pos < inlen){
+            outbuf[index++] = ((int)(strchr(TABLE, inbuf[pos]) - TABLE) << 4) | (int)((strchr(TABLE, inbuf[pos + 1])) - TABLE);
+            pos += 2;
         }
-        *plain = '\0';
+        outbuf[index] = '\0';
     }
 }

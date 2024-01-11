@@ -1,9 +1,11 @@
 #ifndef __BASE64_H__
 #define __BASE64_H__
 
+/* size buffer encode  (((strlen(string) + 3 - 1) / 3) * 4) + 1
+   size buffer decode (strlen(string) * 3) / 4
+*/
+void b64encode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
 
-void b64encode(const char *plain, size_t plain_len, char *encoded, size_t encoded_len);
-
-void b64decode(const char *encoded, size_t encoded_len, char *plain, size_t plain_len);
+void b64decode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
 
 #endif

@@ -4,39 +4,39 @@
 
 static const char TABLE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-void b64encode(const char *plain, size_t plain_len, char *encoded, size_t encoded_len){
+void b64encode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
     size_t index = 0;
     size_t pos = 0;
-    if(plain_len > 0 && encoded_len > 0){
-        while(pos < plain_len){
-            encoded[index++] = TABLE[(plain[pos] >> 2)];
-            encoded[index++] = TABLE[(((plain[pos] & 3) << 4) | (plain[pos + 1] >> 4))];
-            if((plain_len - pos) > 1)
-                encoded[index++] = TABLE[(((plain[pos + 1] & 15) << 2) | (plain[pos + 2] >> 6))];
+    if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+        while(pos < inlen){
+            outbuf[index++] = TABLE[(inbuf[pos] >> 2)];
+            outbuf[index++] = TABLE[(((inbuf[pos] & 3) << 4) | (inbuf[pos + 1] >> 4))];
+            if((inlen - pos) > 1)
+                outbuf[index++] = TABLE[(((inbuf[pos + 1] & 15) << 2) | (inbuf[pos + 2] >> 6))];
             else
-                encoded[index++] = '=';
-            if((plain_len - pos) > 2)
-                encoded[index++] = TABLE[(plain[pos + 2] & 63)];
+                outbuf[index++] = '=';
+            if((inlen - pos) > 2)
+                outbuf[index++] = TABLE[(inbuf[pos + 2] & 63)];
             else
-                encoded[index++] = '=';
+                outbuf[index++] = '=';
             pos += 3;
         }
-        encoded[index] = '\0';
+        outbuf[index] = '\0';
     }
 }
 
-void b64decode(const char *encoded, size_t encoded_len, char *plain, size_t plain_len){
+void b64decode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
     size_t pos = 0;
     size_t index = 0;
-    if(encoded_len > 0 && plain_len > 0){
-        while(pos < encoded_len){
-            plain[index++] = ((int)(strchr(TABLE, encoded[pos]) - TABLE) << 2) | ((int)(strchr(TABLE, encoded[pos + 1]) - TABLE) >> 4);
-            if(encoded[pos + 2] != '=')
-                plain[index++] = (((int)(strchr(TABLE, encoded[pos + 1]) - TABLE) & 15) << 4) | ((int)(strchr(TABLE, encoded[pos + 2]) - TABLE) >> 2);
-            if(encoded[pos + 3] != '=')
-                plain[index++] = (((int)(strchr(TABLE, encoded[pos + 2]) - TABLE) & 3) << 6) | (int)(strchr(TABLE, encoded[pos + 3]) - TABLE);
+    if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+        while(pos < inlen){
+            outbuf[index++] = ((int)(strchr(TABLE, inbuf[pos]) - TABLE) << 2) | ((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) >> 4);
+            if(inbuf[pos + 2] != '=')
+                outbuf[index++] = (((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) & 15) << 4) | ((int)(strchr(TABLE, inbuf[pos + 2]) - TABLE) >> 2);
+            if(inbuf[pos + 3] != '=')
+                outbuf[index++] = (((int)(strchr(TABLE, inbuf[pos + 2]) - TABLE) & 3) << 6) | (int)(strchr(TABLE, inbuf[pos + 3]) - TABLE);
             pos += 4;
         }
-        plain[index] = '\0';
+        outbuf[index] = '\0';
     }
 }
