@@ -31,7 +31,7 @@ void b64decode(const char *inbuf, const size_t inlen, void *outbuf, const size_t
     size_t pos = 0;
     size_t index = 0;
     unsigned char *buf = NULL;
-    if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+    if(inbuf != NULL && outbuf != NULL){
         buf = (unsigned char *)outbuf;
         while(pos < inlen){
             buf[index++] = ((int)(strchr(TABLE, inbuf[pos]) - TABLE) << 2) | ((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) >> 4);
