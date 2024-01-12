@@ -5,7 +5,7 @@
 
 static const char TABLE[] = "0123456789abcdef";
 
-void urlencode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
+void urlencode(const unsigned char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
     size_t index = 0;
     size_t pos = 0;
     if(inbuf != NULL && outbuf != NULL && outlen > inlen){
@@ -18,7 +18,7 @@ void urlencode(const char *inbuf, const size_t inlen, char *outbuf, const size_t
     }
 }
 
-void urldecode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
+void urldecode(const char *inbuf, const size_t inlen, unsigned char *outbuf, const size_t outlen){
     size_t index = 0;
     size_t pos = 0;
     if(inbuf != NULL && outbuf != NULL && outlen > inlen){
