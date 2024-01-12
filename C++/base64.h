@@ -8,7 +8,7 @@ class Base64{
 
 public:
 
-    static std::string encode(std::string inbuf){
+    static std::string encode(const std::string &inbuf){
         size_t len = inbuf.size();
         size_t pos = 0;
         std::string outbuf;
@@ -28,7 +28,7 @@ public:
         return outbuf;
     }
 
-    static std::string decode(std::string inbuf){
+    static std::string decode(const std::string &inbuf){
         size_t len = inbuf.size();
         size_t pos = 0;
         std::string outbuf;
