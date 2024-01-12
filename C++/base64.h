@@ -58,11 +58,11 @@ public:
         size_t pos = 0;
         std::string outbuf;
         while(pos < len){
-            outbuf.push_back((TABLE.find(inbuf[pos]) << 2) | (TABLE.find(inbuf[pos + 1]) >> 4));
+            outbuf.push_back((TABLE[inbuf[pos]] << 2) | (TABLE[inbuf[pos + 1]] >> 4));
             if(inbuf[pos + 2] != '=')
-                outbuf.push_back(((TABLE.find(inbuf[pos + 1]) & 15) << 4) | (TABLE.find(inbuf[pos + 2]) >> 2));
+                outbuf.push_back(((TABLE[inbuf[pos + 1]] & 15) << 4) | (TABLE[inbuf[pos + 2]] >> 2));
             if(inbuf[pos + 3] != '=')
-                outbuf.push_back(((TABLE.find(inbuf[pos + 2]) & 3) << 6) | TABLE.find(inbuf[pos + 3]));
+                outbuf.push_back(((TABLE[inbuf[pos + 2]] & 3) << 6) | TABLE[inbuf[pos + 3]]);
             pos += 4;
         }
         return static_cast<void *>(const_cast<char *>(outbuf.c_str()));
@@ -72,35 +72,35 @@ public:
         size_t pos = 0;
         std::string outbuf;
         while(pos < inlen){
-            outbuf.push_back((TABLE.find(inbuf[pos]) << 2) | (TABLE.find(inbuf[pos + 1]) >> 4));
+            outbuf.push_back((TABLE[inbuf[pos]] << 2) | (TABLE[inbuf[pos + 1]] >> 4));
             if(inbuf[pos + 2] != '=')
-                outbuf.push_back(((TABLE.find(inbuf[pos + 1]) & 15) << 4) | (TABLE.find(inbuf[pos + 2]) >> 2));
+                outbuf.push_back(((TABLE[inbuf[pos + 1]] & 15) << 4) | (TABLE[inbuf[pos + 2]] >> 2));
             if(inbuf[pos + 3] != '=')
-                outbuf.push_back(((TABLE.find(inbuf[pos + 2]) & 3) << 6) | TABLE.find(inbuf[pos + 3]));
+                outbuf.push_back(((TABLE[inbuf[pos + 2]] & 3) << 6) | TABLE[inbuf[pos + 3]]);
             pos += 4;
         }
         return static_cast<void *>(const_cast<char *>(outbuf.c_str()));
     }
 	
-	static void b64decode(const char *inbuf, const size_t inlen, void *outbuf, const size_t outlen){
+    static void b64decode(const char *inbuf, const size_t inlen, void *outbuf, const size_t outlen){
 		size_t pos = 0;
 		size_t index = 0;
 		unsigned char *buf = NULL;
 		if(inbuf != NULL && outbuf != NULL && outlen > inlen){
 			buf = (unsigned char *)outbuf;
 			while(pos < inlen){
-				buf[index++] = (TABLE.find(inbuf[pos]) << 2) | (TABLE.find(inbuf[pos + 1]) >> 4);
+				buf[index++] = (TABLE[inbuf[pos]] << 2) | (TABLE[inbuf[pos + 1]] >> 4);
 				if(inbuf[pos + 2] != '=')
-					buf[index++] = ((TABLE.find(inbuf[pos + 1]) & 15) << 4) | (TABLE.find(inbuf[pos + 2]) >> 2);
+					buf[index++] = ((TABLE[inbuf[pos + 1]] & 15) << 4) | (TABLE[inbuf[pos + 2]] >> 2);
 				if(inbuf[pos + 3] != '=')
-					buf[index++] = ((TABLE.find(inbuf[pos + 2]) & 3) << 6) | TABLE.find(inbuf[pos + 3]);
+					buf[index++] = ((TABLE[inbuf[pos + 2]] & 3) << 6) | TABLE[inbuf[pos + 3]];
 				pos += 4;
 			}
 			buf[index] = '\0';
 		}
     }
 	
-	static void b64decode(const std::string &inbuf, void *outbuf, const size_t outlen){
+    static void b64decode(const std::string &inbuf, void *outbuf, const size_t outlen){
 		size_t inlen = inbuf.size();
 		size_t pos = 0;
 		size_t index = 0;
