@@ -4,7 +4,7 @@
 
 #include "md2.h"
 
-static unsigned int table[] = {41,46, 67, 201, 162, 216, 124, 1, 61, 54, 84, 161, 236, 240, 6, 19, 98, 167, 5, 243, 192, 199, 115, 140, 152, 147, 43, 217, 188, 76, 130, 202,
+static const unsigned int table[] = {41,46, 67, 201, 162, 216, 124, 1, 61, 54, 84, 161, 236, 240, 6, 19, 98, 167, 5, 243, 192, 199, 115, 140, 152, 147, 43, 217, 188, 76, 130, 202,
                     30, 155, 87, 60, 253, 212, 224, 22, 103, 66, 111, 24, 138, 23, 229, 18, 190, 78, 196, 214, 218, 158, 222, 73, 160, 251, 245, 142, 187, 47, 238,
                     122, 169, 104, 121, 145, 21, 178, 7, 63, 148, 194, 16, 137, 11, 34, 95, 33, 128, 127, 93, 154, 90, 144, 50, 39, 53, 62, 204, 231, 191, 247, 151,
                     3, 255, 25, 48, 179, 72, 165, 181, 209, 215, 94, 146, 42, 172, 86, 170, 198, 79, 184, 56, 210, 150, 164, 125, 182, 118, 252, 107, 226, 156, 116,
@@ -13,17 +13,17 @@ static unsigned int table[] = {41,46, 67, 201, 162, 216, 124, 1, 61, 54, 84, 161
                     106, 220, 55, 200, 108, 193, 171, 250, 36, 225, 123, 8, 12, 189, 177, 74, 120, 136, 149, 139, 227, 99, 232, 109, 233, 203, 213, 254, 59, 0, 29, 57,
                     242, 239, 183, 14, 102, 88, 208, 228, 166, 119, 114, 248, 235, 117, 75, 10, 49, 68, 80, 180, 143, 237, 31, 26, 219, 153, 141, 51, 159, 17, 131, 20};
 
-int digest(char *plain, size_t plain_len, unsigned char *digest, size_t *digest_len){
-    size_t padding = MD2_BLOCK_SIZE - (plain_len % MD2_BLOCK_SIZE);
-    size_t len = plain_len + padding;
+int md2(const unsigned char *inbuf, size_t inlen, unsigned char *outbuf, size_t outlen){
+    size_t padding = MD2_BLOCK_SIZE - (inlen % MD2_BLOCK_SIZE);
+    size_t len = inlen + padding;
     unsigned char checksum[MD2_BLOCK_SIZE] = {0};
     unsigned char block[48] = {0};
     unsigned char *message = NULL;
     size_t l, t, i, j, k;
     l = t = i = j = k = 0;
     if((message = (unsigned char*)calloc(len, sizeof(unsigned char))) != NULL){
-        memcpy(message, plain, plain_len);
-        memset(message + plain_len, padding, padding);
+        memcpy(message, inbuf, inlen);
+        memset(message + inlen, padding, padding);
         for(i = 0; i < len / MD2_BLOCK_SIZE; i++){
             for(j = 0; j < MD2_BLOCK_SIZE; j++){
                 l = table[(message[i * MD2_BLOCK_SIZE + j] ^ l)] ^ checksum[j];
@@ -47,10 +47,7 @@ int digest(char *plain, size_t plain_len, unsigned char *digest, size_t *digest_
                     t = (t + j) % 256;
                 }
             }
-
-            for(i = 0; i < 16; i++)
-                digest[i] = block[i];
-            *digest_len = 16;
+            snprintf(outbuf, outlen, "%s", block);
         }
         free(message);
         return EXIT_SUCCESS;
