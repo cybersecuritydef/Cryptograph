@@ -59,11 +59,11 @@ public:
         std::string outbuf;
 	if(inlen > 0){
 		while(pos < inlen){
-	            outbuf.push_back((TABLE[inbuf[pos]] << 2) | (TABLE[inbuf[pos + 1]] >> 4));
+	            outbuf.push_back((TABLE.find(inbuf[pos]) << 2) | (TABLE.find(inbuf[pos + 1]) >> 4));
 	            if(inbuf[pos + 2] != '=')
-	                outbuf.push_back(((TABLE[inbuf[pos + 1]] & 15) << 4) | (TABLE[inbuf[pos + 2]] >> 2));
+	                outbuf.push_back((TABLE.find(inbuf[pos + 1]) & 15) << 4) | (TABLE.find(inbuf[pos + 2]) >> 2);
 	            if(inbuf[pos + 3] != '=')
-	                outbuf.push_back(((TABLE[inbuf[pos + 2]] & 3) << 6) | TABLE[inbuf[pos + 3]]);
+	                outbuf.push_back((TABLE.find(inbuf[pos + 2]) & 3) << 6) | TABLE.find(inbuf[pos + 3]);
 	            pos += 4;
 	        }
 	}        
@@ -75,11 +75,11 @@ public:
         std::string outbuf;
 	if(inbuf != nullptr && inlen > 0){
 		while(pos < inlen){
-	            outbuf.push_back((TABLE[inbuf[pos]] << 2) | (TABLE[inbuf[pos + 1]] >> 4));
+	            outbuf.push_back((TABLE.find(inbuf[pos]) << 2) | (TABLE.find(inbuf[pos + 1]) >> 4));
 	            if(inbuf[pos + 2] != '=')
-	                outbuf.push_back(((TABLE[inbuf[pos + 1]] & 15) << 4) | (TABLE[inbuf[pos + 2]] >> 2));
+	                outbuf.push_back((TABLE.find(inbuf[pos + 1]) & 15) << 4) | (TABLE.find(inbuf[pos + 2]) >> 2);
 	            if(inbuf[pos + 3] != '=')
-	                outbuf.push_back(((TABLE[inbuf[pos + 2]] & 3) << 6) | TABLE[inbuf[pos + 3]]);
+	                outbuf.push_back((TABLE.find(inbuf[pos + 2]) & 3) << 6) | TABLE.find(inbuf[pos + 3]);
 	            pos += 4;
 		}	        
 	}
@@ -93,11 +93,11 @@ public:
 	if(inbuf != nullptr && outbuf != nullptr && inlen > 0 && outlen > inlen){
 		buf = (unsigned char *)outbuf;
 		while(pos < inlen){
-			buf[index++] = (TABLE[inbuf[pos]] << 2) | (TABLE[inbuf[pos + 1]] >> 4);
+			buf[index++] = (TABLE.find(inbuf[pos]) << 2) | (TABLE.find(inbuf[pos + 1]) >> 4);
 			if(inbuf[pos + 2] != '=')
-				buf[index++] = ((TABLE[inbuf[pos + 1]] & 15) << 4) | (TABLE[inbuf[pos + 2]] >> 2);
+				buf[index++] = ((TABLE.find(inbuf[pos + 1]) & 15) << 4) | (TABLE.find(inbuf[pos + 2]) >> 2);
 			if(inbuf[pos + 3] != '=')
-				buf[index++] = ((TABLE[inbuf[pos + 2]] & 3) << 6) | TABLE[inbuf[pos + 3]];
+				buf[index++] = ((TABLE.find(inbuf[pos + 2]) & 3) << 6) | TABLE.find(inbuf[pos + 3]);
 			pos += 4;
 		}
 		buf[index] = '\0';
