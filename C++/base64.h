@@ -2,7 +2,6 @@
 #define __BASE64_H__
 
 #include <iostream>
-#include <vector>
 
 class Base64{
 
@@ -30,7 +29,30 @@ public:
         }
         return outbuf;
     }
-
+    
+    static void b64encode(const void *inbuf, size_t inlen, char *outbuf, size_t outlen){
+        size_t index = 0;
+        size_t pos = 0;
+        const unsigned char *buf = NULL;
+        if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+            buf = (unsigned char *)inbuf;
+            while(pos < inlen){
+                outbuf[index++] = TABLE[(buf[pos] >> 2)];
+                outbuf[index++] = TABLE[(((buf[pos] & 3) << 4) | (buf[pos + 1] >> 4))];
+                if((inlen - pos) > 1)
+                    outbuf[index++] = TABLE[(((buf[pos + 1] & 15) << 2) | (buf[pos + 2] >> 6))];
+                else
+                    outbuf[index++] = '=';
+                if((inlen - pos) > 2)
+                    outbuf[index++] = TABLE[(buf[pos + 2] & 63)];
+                else
+                    outbuf[index++] = '=';
+                pos += 3;
+            }
+            outbuf[index] = '\0';
+        }
+    }
+    
     static void *b64decode(const std::string &inbuf){
         size_t len = inbuf.size();
         size_t pos = 0;
