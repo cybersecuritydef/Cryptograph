@@ -5,8 +5,8 @@
    size buffer decode (strlen(string) * 5) / 5
 */
 
-void b32encode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
+void b32encode(const unsigned char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
 
-void b32decode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
+void b32decode(const char *inbuf, const size_t inlen, unsigned char *outbuf, const size_t outlen);
 
 #endif
