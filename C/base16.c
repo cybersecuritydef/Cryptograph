@@ -22,9 +22,9 @@ void b16decode(const char *inbuf, const size_t inlen, void *outbuf, const size_t
     size_t index = 0;
     size_t pos = 0;
     unsigned char *buf = NULL;
-    if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+    if(inbuf != NULL && outbuf != NULL){
         buf = (unsigned char *)outbuf;
-        while(pos < inlen){
+        while(pos < inlen && index < outlen){
             buf[index++] = ((int)(strchr(TABLE, inbuf[pos]) - TABLE) << 4) | (int)((strchr(TABLE, inbuf[pos + 1])) - TABLE);
             pos += 2;
         }
