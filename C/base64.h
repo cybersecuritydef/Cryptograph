@@ -6,6 +6,6 @@
 */
 void b64encode(const unsigned char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
 
-void b64decode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
+void b64decode(const char *inbuf, const size_t inlen, unsigned char *outbuf, const size_t outlen);
 
 #endif
