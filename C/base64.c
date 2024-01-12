@@ -8,9 +8,9 @@ void b64encode(const void *inbuf, const size_t inlen, char *outbuf, const size_t
     size_t index = 0;
     size_t pos = 0;
     const unsigned char *buf = NULL;
-    if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+    if(inbuf != NULL && outbuf != NULL){
         buf = (unsigned char *)inbuf;
-        while(pos < inlen){
+        while(pos < inlen && index < outlen){
             outbuf[index++] = TABLE[(buf[pos] >> 2)];
             outbuf[index++] = TABLE[(((buf[pos] & 3) << 4) | (buf[pos + 1] >> 4))];
             if((inlen - pos) > 1)
@@ -33,7 +33,7 @@ void b64decode(const char *inbuf, const size_t inlen, void *outbuf, const size_t
     unsigned char *buf = NULL;
     if(inbuf != NULL && outbuf != NULL){
         buf = (unsigned char *)outbuf;
-        while(pos < inlen){
+        while(pos < inlen && index < outlen){
             buf[index++] = ((int)(strchr(TABLE, inbuf[pos]) - TABLE) << 2) | ((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) >> 4);
             if(inbuf[pos + 2] != '=')
                 buf[index++] = (((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) & 15) << 4) | ((int)(strchr(TABLE, inbuf[pos + 2]) - TABLE) >> 2);
