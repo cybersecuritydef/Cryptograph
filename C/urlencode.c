@@ -5,27 +5,31 @@
 
 static const char TABLE[] = "0123456789abcdef";
 
-void urlencode(const unsigned char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
+void urlencode(const void *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
     size_t index = 0;
     size_t pos = 0;
+    const unsigned char *buf = NULL;
     if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+        buf = (unsigned char *)inbuf;
         while(pos < inlen){
             outbuf[index++] = '%';
-            outbuf[index++] = TABLE[tolower(inbuf[pos]) >> 4];
-            outbuf[index++] = TABLE[tolower(inbuf[pos++]) & 15];
+            outbuf[index++] = TABLE[tolower(buf[pos]) >> 4];
+            outbuf[index++] = TABLE[tolower(buf[pos++]) & 15];
         }
         outbuf[index] = '\0';
     }
 }
 
-void urldecode(const char *inbuf, const size_t inlen, unsigned char *outbuf, const size_t outlen){
+void urldecode(const char *inbuf, const size_t inlen, void *outbuf, const size_t outlen){
     size_t index = 0;
     size_t pos = 0;
+    unsigned char *buf = NULL;
     if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+        buf = (unsigned char *)outbuf;
         while(pos < inlen){
-            outbuf[index++] = ((int)(strchr(TABLE, tolower(inbuf[pos + 1])) - TABLE) << 4) | (int)(strchr(TABLE, tolower(inbuf[pos + 2])) - TABLE);
+            buf[index++] = ((int)(strchr(TABLE, tolower(inbuf[pos + 1])) - TABLE) << 4) | (int)(strchr(TABLE, tolower(inbuf[pos + 2])) - TABLE);
             pos += 3;
         }
-        outbuf[index] = '\0';
+        buf[index] = '\0';
     }
 }
