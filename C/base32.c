@@ -8,9 +8,9 @@ void b32encode(const void *inbuf, const size_t inlen, char *outbuf, const size_t
     size_t pos = 0;
     size_t index = 0;
     const unsigned char *buf = NULL;
-    if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+    if(inbuf != NULL && outbuf != NULL){
         buf = (unsigned char *)inbuf;
-        while(pos < inlen){
+        while(pos < inlen && index < outlen){
             outbuf[index++] = TABLE[(buf[pos] >> 3) & 31];
             outbuf[index++] = TABLE[((buf[pos] << 2) | (buf[pos + 1] >> 6)) & 31];
             if((inlen - pos) > 1)
@@ -52,9 +52,9 @@ void b32decode(const char *inbuf, const size_t inlen, void *outbuf, const size_t
     size_t pos = 0;
     size_t index = 0;
     unsigned char *buf = NULL;
-    if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+    if(inbuf != NULL && outbuf != NULL){
         buf = (unsigned char *)outbuf;
-        while(pos < inlen){
+        while(pos < inlen && index < outlen){
             buf[index++] = ((int)(strchr(TABLE, inbuf[pos]) - TABLE) << 3) | ((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) >> 2);
             if(inbuf[pos + 2] != '=')
                 buf[index++] = ((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) << 6) | ((int)(strchr(TABLE, inbuf[pos + 2]) - TABLE) << 1) | ((int)(strchr(TABLE, inbuf[pos + 3]) - TABLE) >> 4);
