@@ -89,29 +89,30 @@ public:
 		if(inbuf != NULL && outbuf != NULL && outlen > inlen){
 			buf = (unsigned char *)outbuf;
 			while(pos < inlen){
-				buf[index++] = ((int)(strchr(TABLE, inbuf[pos]) - TABLE) << 2) | ((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) >> 4);
+				buf[index++] = (TABLE.find(inbuf[pos]) << 2) | (TABLE.find(inbuf[pos + 1]) >> 4);
 				if(inbuf[pos + 2] != '=')
-					buf[index++] = (((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) & 15) << 4) | ((int)(strchr(TABLE, inbuf[pos + 2]) - TABLE) >> 2);
+					buf[index++] = ((TABLE.find(inbuf[pos + 1]) & 15) << 4) | (TABLE.find(inbuf[pos + 2]) >> 2);
 				if(inbuf[pos + 3] != '=')
-					buf[index++] = (((int)(strchr(TABLE, inbuf[pos + 2]) - TABLE) & 3) << 6) | (int)(strchr(TABLE, inbuf[pos + 3]) - TABLE);
+					buf[index++] = ((TABLE.find(inbuf[pos + 2]) & 3) << 6) | TABLE.find(inbuf[pos + 3]);
 				pos += 4;
 			}
 			buf[index] = '\0';
+		}
     }
 	
 	static void b64decode(const std::string &inbuf, void *outbuf, const size_t outlen){
 		size_t inlen = inbuf.size();
 		size_t pos = 0;
 		size_t index = 0;
-		unsigned char *buf = NULL;
-		if(inbuf != NULL && outbuf != NULL && outlen > inlen){
+		unsigned char *buf = nullptr;
+		if(!inbuf.empty()  && outbuf != nullptr && outlen > inlen){
 			buf = (unsigned char *)outbuf;
 			while(pos < inlen){
-				buf[index++] = ((int)(strchr(TABLE, inbuf[pos]) - TABLE) << 2) | ((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) >> 4);
+				buf[index++] = (TABLE.find(inbuf[pos]) << 2) | (TABLE.find(inbuf[pos + 1]) >> 4);
 				if(inbuf[pos + 2] != '=')
-					buf[index++] = (((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) & 15) << 4) | ((int)(strchr(TABLE, inbuf[pos + 2]) - TABLE) >> 2);
+					buf[index++] = ((TABLE.find(inbuf[pos + 1]) & 15) << 4) | (TABLE.find(inbuf[pos + 2]) >> 2);
 				if(inbuf[pos + 3] != '=')
-					buf[index++] = (((int)(strchr(TABLE, inbuf[pos + 2]) - TABLE) & 3) << 6) | (int)(strchr(TABLE, inbuf[pos + 3]) - TABLE);
+					buf[index++] = ((TABLE.find(inbuf[pos + 2]) & 3) << 6) | TABLE.find(inbuf[pos + 3]);
 				pos += 4;
 			}
 			buf[index] = '\0';
