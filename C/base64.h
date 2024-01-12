@@ -4,7 +4,7 @@
 /* size buffer encode  (((strlen(string) + 3 - 1) / 3) * 4) + 1
    size buffer decode (strlen(string) * 3) / 4
 */
-void b64encode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
+void b64encode(const unsigned char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
 
 void b64decode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen);
 
