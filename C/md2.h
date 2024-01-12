@@ -3,6 +3,6 @@
 
 #define MD2_BLOCK_SIZE 16
 
-int digest(char *plain, size_t plain_len, unsigned char *digest, size_t *digest_len);
+int md2(const unsigned char *inbuf, size_t inlen, unsigned char *outbuf, size_t outlen);
 
 #endif
