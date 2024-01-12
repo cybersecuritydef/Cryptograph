@@ -8,39 +8,39 @@ class Base64{
 
 public:
 
-    static std::string encode(std::string plainText){
-        size_t len = plainText.size();
+    static std::string encode(std::string inbuf){
+        size_t len = inbuf.size();
         size_t pos = 0;
-        std::string encoded;
+        std::string outbuf;
         while(pos < len){
-            encoded.push_back(TABLE[(plainText[pos] >> 2)]);
-            encoded.push_back(TABLE[(((plainText[pos] & 3) << 4) | (plainText[pos + 1] >> 4))]);
+            outbuf.push_back(TABLE[(inbuf[pos] >> 2)]);
+            outbuf.push_back(TABLE[(((inbuf[pos] & 3) << 4) | (inbuf[pos + 1] >> 4))]);
             if((len - pos) > 1)
-                encoded.push_back(TABLE[(((plainText[pos + 1] & 15) << 2) | (plainText[pos + 2] >> 6))]);
+                outbuf.push_back(TABLE[(((inbuf[pos + 1] & 15) << 2) | (inbuf[pos + 2] >> 6))]);
             else
-                encoded.push_back('=');
+                outbuf.push_back('=');
             if((len - pos) > 2)
-                encoded.push_back(TABLE[(plainText[pos + 2] & 63)]);
+                outbuf.push_back(TABLE[(inbuf[pos + 2] & 63)]);
             else
-                encoded.push_back('=');
+                outbuf.push_back('=');
             pos += 3;
         }
-        return encoded;
+        return outbuf;
     }
 
-    static std::string decode(std::string encodeText){
-        size_t len = encodeText.size();
+    static std::string decode(std::string inbuf){
+        size_t len = inbuf.size();
         size_t pos = 0;
-        std::string decoded;
+        std::string outbuf;
         while(pos < len){
-            decoded.push_back((TABLE.find(encodeText[pos]) << 2) | (TABLE.find(encodeText[pos + 1]) >> 4));
-            if(encodeText[pos + 2] != '=')
-                decoded.push_back(((TABLE.find(encodeText[pos + 1]) & 15) << 4) | (TABLE.find(encodeText[pos + 2]) >> 2));
-            if(encodeText[pos + 3] != '=')
-                decoded.push_back(((TABLE.find(encodeText[pos + 2]) & 3) << 6) | TABLE.find(encodeText[pos + 3]));
+            outbuf.push_back((TABLE.find(inbuf[pos]) << 2) | (TABLE.find(inbuf[pos + 1]) >> 4));
+            if(inbuf[pos + 2] != '=')
+                outbuf.push_back(((TABLE.find(inbuf[pos + 1]) & 15) << 4) | (TABLE.find(inbuf[pos + 2]) >> 2));
+            if(inbuf[pos + 3] != '=')
+                outbuf.push_back(((TABLE.find(inbuf[pos + 2]) & 3) << 6) | TABLE.find(inbuf[pos + 3]));
             pos += 4;
         }
-        return decoded;
+        return outbuf;
     }
 
 private:
