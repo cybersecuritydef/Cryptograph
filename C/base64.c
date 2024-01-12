@@ -4,7 +4,7 @@
 
 static const char TABLE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-void b64encode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
+void b64encode(const unsigned char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
     size_t index = 0;
     size_t pos = 0;
     if(inbuf != NULL && outbuf != NULL && outlen > inlen){
@@ -25,7 +25,7 @@ void b64encode(const char *inbuf, const size_t inlen, char *outbuf, const size_t
     }
 }
 
-void b64decode(const char *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
+void b64decode(const char *inbuf, const size_t inlen, unsigned char *outbuf, const size_t outlen){
     size_t pos = 0;
     size_t index = 0;
     if(inbuf != NULL && outbuf != NULL && outlen > inlen){
