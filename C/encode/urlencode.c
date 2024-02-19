@@ -12,9 +12,14 @@ void urlencode(const void *inbuf, const size_t inlen, char *outbuf, const size_t
     if(inbuf != NULL && outbuf != NULL){
         buf = (unsigned char *)inbuf;
         while(pos < inlen && index < outlen){
-            outbuf[index++] = '%';
-            outbuf[index++] = TABLE[tolower(buf[pos]) >> 4];
-            outbuf[index++] = TABLE[tolower(buf[pos++]) & 15];
+            if(('a' <= buf[pos] && buf[pos] <= 'z') || ('A' <= buf[pos] && buf[pos] <= 'Z') || ('0' <= buf[pos] && buf[pos] <= '9')){
+                outbuf[index++] = tolower(buf[pos++]);
+            }
+            else{
+                outbuf[index++] = '%';
+                outbuf[index++] = TABLE[tolower(buf[pos]) >> 4];
+                outbuf[index++] = TABLE[tolower(buf[pos++]) & 15];
+            };
         }
         outbuf[index] = '\0';
     }
