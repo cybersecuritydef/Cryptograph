@@ -17,8 +17,8 @@ void urlencode(const void *inbuf, const size_t inlen, char *outbuf, const size_t
             }
             else{
                 outbuf[index++] = '%';
-                outbuf[index++] = TABLE[tolower(buf[pos]) >> 4];
-                outbuf[index++] = TABLE[tolower(buf[pos++]) & 15];
+                outbuf[index++] = TABLE[buf[pos] >> 4];
+                outbuf[index++] = TABLE[buf[pos++] & 15];
             };
         }
         outbuf[index] = '\0';
@@ -32,7 +32,7 @@ void urldecode(const char *inbuf, const size_t inlen, void *outbuf, const size_t
     if(inbuf != NULL && outbuf != NULL){
         buf = (unsigned char *)outbuf;
         while(pos < inlen && index < outlen){
-            buf[index++] = ((int)(strchr(TABLE, tolower(inbuf[pos + 1])) - TABLE) << 4) | (int)(strchr(TABLE, tolower(inbuf[pos + 2])) - TABLE);
+            buf[index++] = ((int)(strchr(TABLE, inbuf[pos + 1]) - TABLE) << 4) | (int)(strchr(TABLE, inbuf[pos + 2]) - TABLE);
             pos += 3;
         }
         buf[index] = '\0';
