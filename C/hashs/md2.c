@@ -13,7 +13,7 @@ static const unsigned int table[] = {41,46, 67, 201, 162, 216, 124, 1, 61, 54, 8
                                     106, 220, 55, 200, 108, 193, 171, 250, 36, 225, 123, 8, 12, 189, 177, 74, 120, 136, 149, 139, 227, 99, 232, 109, 233, 203, 213, 254, 59, 0, 29, 57,
                                     242, 239, 183, 14, 102, 88, 208, 228, 166, 119, 114, 248, 235, 117, 75, 10, 49, 68, 80, 180, 143, 237, 31, 26, 219, 153, 141, 51, 159, 17, 131, 20};
 
-void md2(const void *inbuf, const size_t inlen, void *outbuf, const size_t outlen){
+void md2(const void *inbuf, const size_t inlen, char *outbuf, const size_t outlen){
     size_t padding = MD2_BLOCK_SIZE - (inlen % MD2_BLOCK_SIZE);
     size_t len = inlen + padding;
     unsigned char checksum[MD2_BLOCK_SIZE] = {0};
