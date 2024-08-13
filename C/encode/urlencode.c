@@ -13,7 +13,7 @@ void urlencode(const void *inbuf, const size_t inlen, char *outbuf, const size_t
         buf = (unsigned char *)inbuf;
         while(pos < inlen && index < outlen){
             if(('a' <= buf[pos] && buf[pos] <= 'z') || ('A' <= buf[pos] && buf[pos] <= 'Z') || ('0' <= buf[pos] && buf[pos] <= '9')){
-                outbuf[index++] = tolower(buf[pos++]);
+                outbuf[index++] = buf[pos++];
             }
             else{
                 outbuf[index++] = '%';
