@@ -210,13 +210,11 @@ list_address *addresses(const char *addr, const char *netmask){
 void list_address_free(list_address **ls){
     list_address *tmp = NULL;
     if(ls != NULL && (*ls) != NULL){
-        while((*ls)->next != NULL){
+        while((*ls) != NULL){
             tmp = (*ls);
             (*ls) = (*ls)->next;
             free(tmp);
             tmp = NULL;
         }
-        free((*ls));
-        (*ls) = NULL;
     }
 }
