@@ -8,8 +8,7 @@ void xor(const void *inbuf, const size_t inlen, const char *key, const int keyle
     if(inbuf != NULL && key != NULL && outbuf != NULL && inlen > 0 && keylen > 0){
         ibuf = (unsigned char *)inbuf;
         obuf = (unsigned char *)outbuf;
-        for(index = 0; index < inlen; index++){
-            obuf[index] = ibuf[index] ^ key[index % keylen];
-        }   
+        for(index = 0; index < inlen; index++)
+            obuf[index] = ibuf[index] ^ key[index % keylen]; 
     }
 }
