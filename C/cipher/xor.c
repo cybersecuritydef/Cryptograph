@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void xor(const void *inbuf, const size_t inlen, const void *key, const int keylen, void *outbuf){
-    int index = 0;
+void xor(const void *inbuf, const size_t inlen, const void *key, const size_t keylen, void *outbuf){
+    size_t index = 0;
     const unsigned char *ibuf = NULL;
     const unsigned char *k = NULL;
     unsigned char *obuf = NULL;
