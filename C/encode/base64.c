@@ -9,18 +9,32 @@ void b64encode(const void *inbuf, const size_t inlen, char *outbuf, const size_t
     size_t pos = 0;
     const unsigned char *buf = NULL;
     if(inbuf != NULL && outbuf != NULL){
-        buf = (unsigned char *)inbuf;
-        while(pos < inlen && index < outlen){
-            outbuf[index++] = TABLE[(buf[pos] >> 2)];
-            outbuf[index++] = TABLE[(((buf[pos] & 3) << 4) | (buf[pos + 1] >> 4))];
-            if((inlen - pos) > 1)
-                outbuf[index++] = TABLE[(((buf[pos + 1] & 15) << 2) | (buf[pos + 2] >> 6))];
-            else
-                outbuf[index++] = '=';
-            if((inlen - pos) > 2)
-                outbuf[index++] = TABLE[(buf[pos + 2] & 63)];
-            else
-                outbuf[index++] = '=';
+        buf = (const unsigned char *)inbuf;
+        while(pos < inlen && index < (outlen - 1)){
+            if(index < (outlen - 1))
+                outbuf[index++] = TABLE[(buf[pos] >> 2)];            
+            if(index < (outlen - 1)){
+                if(inlen - pos > 1)            
+                    outbuf[index++] = TABLE[(((buf[pos] & 3) << 4) | (buf[pos + 1] >> 4))];
+                else
+                    outbuf[index++] = TABLE[(((buf[pos] & 3) << 4) | (0 >> 4))];
+            }            
+            if(index < (outlen - 1)){
+                if((inlen - pos) > 1){
+                    if((inlen - pos) > 2)
+                        outbuf[index++] = TABLE[(((buf[pos + 1] & 15) << 2) | (buf[pos + 2] >> 6))];
+                    else
+                        outbuf[index++] = TABLE[(((buf[pos + 1] & 15) << 2) | (0 >> 6))];
+                }                    
+                else
+                    outbuf[index++] = '=';
+            }            
+            if(index < (outlen - 1)){
+                if((inlen - pos) > 2)
+                    outbuf[index++] = TABLE[(buf[pos + 2] & 63)];
+                else
+                    outbuf[index++] = '=';
+            }            
             pos += 3;
         }
         outbuf[index] = '\0';
